@@ -1,0 +1,38 @@
+name:             bunyan
+version:          0.1.0.0
+-- synopsis:
+-- description:
+license:          BSD3
+license-file:     LICENSE
+author:           Getty Ritter <gdritter@galois.com>
+maintainer:       Getty Ritter <gdritter@galois.com>
+copyright:        ©2017 Getty Ritter
+-- category:
+build-type:       Simple
+cabal-version:    >= 1.14
+
+library
+  exposed-modules:     Bunyan
+  other-modules:       Bunyan.App
+                       Bunyan.Log
+                       Bunyan.Pretty
+  hs-source-dirs:      src
+  build-depends:       base >=4.7 && <5
+                     , brick
+                     , containers
+                     , process
+                     , text
+                     , vty
+  default-language:    Haskell2010
+  default-extensions:  ScopedTypeVariables
+
+executable bunyan
+  hs-source-dirs:      bunyan
+  main-is:             Main.hs
+  other-modules:       Options
+  default-extensions:  ScopedTypeVariables
+  ghc-options:         -Wall -threaded
+  build-depends:       base >=4.7 && <5
+                     , bunyan
+                     , directory
+  default-language:    Haskell2010

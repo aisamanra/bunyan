@@ -1,0 +1,5 @@
+*~
+.ghc.env*
+dist-newstyle
+dist
+.dante-dist
