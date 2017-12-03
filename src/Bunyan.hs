@@ -1,13 +1,11 @@
 module Bunyan where
 
-import           Data.Monoid ((<>))
-import qualified Data.Text as T
 import qualified Data.Text.IO as T
 import qualified System.Process as Sys
 
-import           Bunyan.Log
-import           Bunyan.App
-import           Bunyan.Pretty
+import qualified Bunyan.Log as Log
+import qualified Bunyan.App as App
+import qualified Bunyan.Pretty as Pretty
 
 data Config = Config
   { cfgEditorCommand :: String
@@ -20,8 +18,8 @@ main cfg = do
   let pr = (Sys.proc "git" ["log"]) { Sys.cwd = Just (cfgGitRepo cfg)
                                     , Sys.std_out = Sys.CreatePipe
                                     }
-  rs <- Sys.withCreateProcess pr $ \ _ (Just stdin) _ ph -> do
+  rs <- Sys.withCreateProcess pr $ \ _ (Just stdin) _ _ -> do
     T.hGetContents stdin
-  let entries = parseLogEntry rs
-  cats <- runApp entries
-  T.putStrLn (pretty cats)
+  let entries = Log.parseLogEntry rs
+  cats <- App.runApp entries
+  T.putStrLn (Pretty.pretty cats)
